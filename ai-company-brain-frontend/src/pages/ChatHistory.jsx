@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getChatHistory } from "../services/api";
 import "./ChatHistory.css";
 
 function ChatHistory() {
@@ -16,34 +17,14 @@ function ChatHistory() {
     }, []);
 
     const fetchChatHistory = async () => {
-
-        const token = localStorage.getItem("token");
-
         try {
-
-            const response = await fetch(
-                "/chat-history",
-                {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Failed to fetch chat history");
-            }
-
-            const data = await response.json();
-
+            const data = await getChatHistory();
             setChats(data);
 
         } catch (error) {
 
             console.error(error);
-
-            setError("Cannot load chat history.");
+            setError(error.message || "Cannot load chat history.");
 
         } finally {
 

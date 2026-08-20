@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: ai-company-brain-backend
+    runtime: docker
+    dockerfilePath: ai-company-brain/Dockerfile
+    dockerContext: ai-company-brain
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: GOOGLE_GENAI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+
+  - type: web
+    name: ai-company-brain-frontend
+    runtime: static
+    rootDir: ai-company-brain-frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+

@@ -1,0 +1,3 @@
+2026-08-03 21:21:31.714714+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { askAI } from "../services/api";
 
 function AskAI() {
 
@@ -17,41 +18,17 @@ function AskAI() {
             return;
         }
 
-        const token = localStorage.getItem("token");
-
         setLoading(true);
         setAnswer("");
 
         try {
-
-            const response = await fetch(
-                "/ai/ask",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-
-                    body: JSON.stringify({
-                        question: question
-                    })
-                }
-            );
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setAnswer(data.answer);
-            } else {
-                setAnswer("Failed to get answer: " + (data.message || "Unknown error"));
-            }
+            const aiAnswer = await askAI(question);
+            setAnswer(aiAnswer);
 
         } catch (error) {
 
             console.error(error);
-            setAnswer("Cannot connect to backend.");
+            setAnswer("Failed: " + (error.message || "Cannot connect to backend."));
 
         } finally {
             setLoading(false);

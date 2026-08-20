@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../services/api";
 import "./Register.css";
 
 function Register() {
@@ -14,37 +15,14 @@ function Register() {
         e.preventDefault();
 
         try {
-            const response = await fetch("/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    password: password,
-                    role: "USER"
-                })
-            });
+            await registerUser(name, email, password);
 
-            const text = await response.text();
-            let data = {};
-            try {
-                data = JSON.parse(text);
-            } catch (e) {
-                data = { message: text };
-            }
-
-            if (response.ok) {
-                alert("Registration successful!");
-                navigate("/");
-            } else {
-                alert(data.message || "Registration failed");
-            }
+            alert("Registration successful!");
+            navigate("/");
 
         } catch (error) {
             console.error(error);
-            alert("Cannot connect to backend");
+            alert(error.message || "Registration failed");
         }
     };
 

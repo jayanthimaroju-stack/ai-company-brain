@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { uploadDocument } from "../services/api";
 
 function UploadDocument() {
 
@@ -17,44 +18,18 @@ function UploadDocument() {
             return;
         }
 
-        const token = localStorage.getItem("token");
-
-        const formData = new FormData();
-        formData.append("file", file);
-
         setLoading(true);
         setMessage("");
 
         try {
-
-            const response = await fetch(
-                "/documents/upload",
-                {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    },
-                    body: formData
-                }
-            );
-
-            const data = await response.text();
-
-            if (response.ok) {
-                setMessage(
-                    data || "Document uploaded successfully!"
-                );
-                setFile(null);
-            } else {
-                setMessage(
-                    "Upload failed: " + data
-                );
-            }
+            const data = await uploadDocument(file);
+            setMessage(data || "Document uploaded successfully!");
+            setFile(null);
 
         } catch (error) {
 
             console.error(error);
-            setMessage("Cannot connect to backend.");
+            setMessage("Upload failed: " + (error.message || "Cannot connect to backend."));
 
         } finally {
             setLoading(false);

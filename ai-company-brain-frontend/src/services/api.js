@@ -1,13 +1,60 @@
-const API_URL = "";
+export const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "";
 
 const getToken = () => {
     return localStorage.getItem("token");
 };
 
+// =========================
+// AUTH
+// =========================
 
-// =========================
-// ASK AI
-// =========================
+export const loginUser = async (email, password) => {
+    const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    });
+
+    const text = await response.text();
+    let data = {};
+    try {
+        data = JSON.parse(text);
+    } catch {
+        data = { message: text };
+    }
+
+    if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+    }
+
+    return data;
+};
+
+export const registerUser = async (name, email, password) => {
+    const response = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, email, password, role: "USER" })
+    });
+
+    const text = await response.text();
+    let data = {};
+    try {
+        data = JSON.parse(text);
+    } catch {
+        data = { message: text };
+    }
+
+    if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+    }
+
+    return data;
+};
 
 export const askAI = async (question) => {
 

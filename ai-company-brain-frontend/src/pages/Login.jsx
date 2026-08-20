@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/api";
 import "./Login.css";
 
 function Login() {
@@ -13,38 +14,17 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await fetch("/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            });
+            const data = await loginUser(email, password);
 
-            const text = await response.text();
-            let data = {};
-            try {
-                data = JSON.parse(text);
-            } catch (e) {
-                data = { message: text };
-            }
+            localStorage.setItem("token", data.token);
 
-            if (response.ok) {
-                localStorage.setItem("token", data.token);
+            alert("Login successful!");
 
-                alert("Login successful!");
-
-                navigate("/dashboard");
-            } else {
-                alert(data.message || "Login failed");
-            }
+            navigate("/dashboard");
 
         } catch (error) {
             console.error("LOGIN ERROR:", error);
-            alert("LOGIN ERROR: " + error.message);
+            alert(error.message || "Login failed");
         }
     };
 
