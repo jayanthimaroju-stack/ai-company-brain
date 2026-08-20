@@ -1,0 +1,24 @@
+2026-08-03 21:45:44.774998+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
+2026-08-03 21:45:51.724938+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
+2026-08-03 21:45:53.208726+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
+2026-08-03 21:45:54.041009+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
+2026-08-03 21:45:54.241658+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
+2026-08-03 21:46:02.637377+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
+2026-08-03 21:46:03.657422+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
+2026-08-04 20:16:32.223564+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "VECTOR_STORE" not found; SQL statement:
+INSERT INTO public.vector_store (id, content, metadata, embedding) VALUES (?, ?, ?::jsonb, ?) ON CONFLICT (id) DO UPDATE SET content = ? , metadata = ?::jsonb , embedding = ?  [42102-232]
