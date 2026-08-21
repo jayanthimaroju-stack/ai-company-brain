@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../services/api";
 import "./Register.css";
 
@@ -9,20 +9,30 @@ function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setErrorMessage("");
+        setSuccessMessage("");
+        setLoading(true);
 
         try {
             await registerUser(name, email, password);
 
-            alert("Registration successful!");
-            navigate("/");
+            setSuccessMessage("Registration successful! Redirecting to login...");
+            setTimeout(() => {
+                navigate("/login");
+            }, 1200);
 
         } catch (error) {
             console.error(error);
-            alert(error.message || "Registration failed");
+            setErrorMessage(error.message || "Registration failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -146,6 +156,35 @@ function Register() {
                         Start building your AI-powered company brain
                     </p>
 
+                    {errorMessage && (
+                        <div style={{
+                            padding: "12px",
+                            backgroundColor: "#fef2f2",
+                            border: "1px solid #fecaca",
+                            borderRadius: "8px",
+                            color: "#dc2626",
+                            fontSize: "14px",
+                            marginBottom: "16px",
+                            lineHeight: "1.4"
+                        }}>
+                            {errorMessage}
+                        </div>
+                    )}
+
+                    {successMessage && (
+                        <div style={{
+                            padding: "12px",
+                            backgroundColor: "#f0fdf4",
+                            border: "1px solid #bbf7d0",
+                            borderRadius: "8px",
+                            color: "#16a34a",
+                            fontSize: "14px",
+                            marginBottom: "16px",
+                            lineHeight: "1.4"
+                        }}>
+                            {successMessage}
+                        </div>
+                    )}
 
                     <form onSubmit={handleRegister}>
 
@@ -210,8 +249,9 @@ function Register() {
                         <button
                             type="submit"
                             className="register-button"
+                            disabled={loading}
                         >
-                            Create account
+                            {loading ? "Creating account..." : "Create account"}
                             <span>→</span>
                         </button>
 
@@ -223,9 +263,9 @@ function Register() {
 
                         Already have an account?{" "}
 
-                        <a href="/login">
+                        <Link to="/login">
                             Sign in
-                        </a>
+                        </Link>
 
                     </p>
 

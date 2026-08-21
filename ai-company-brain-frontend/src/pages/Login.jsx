@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/api";
 import "./Login.css";
 
@@ -8,23 +8,27 @@ function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setErrorMessage("");
+        setLoading(true);
 
         try {
             const data = await loginUser(email, password);
 
             localStorage.setItem("token", data.token);
 
-            alert("Login successful!");
-
             navigate("/dashboard");
 
         } catch (error) {
             console.error("LOGIN ERROR:", error);
-            alert(error.message || "Login failed");
+            setErrorMessage(error.message || "Login failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -147,6 +151,20 @@ function Login() {
                         Sign in to continue to your AI workspace
                     </p>
 
+                    {errorMessage && (
+                        <div style={{
+                            padding: "12px",
+                            backgroundColor: "#fef2f2",
+                            border: "1px solid #fecaca",
+                            borderRadius: "8px",
+                            color: "#dc2626",
+                            fontSize: "14px",
+                            marginBottom: "16px",
+                            lineHeight: "1.4"
+                        }}>
+                            {errorMessage}
+                        </div>
+                    )}
 
                     <form onSubmit={handleLogin}>
 
@@ -178,10 +196,6 @@ function Login() {
                                     Password
                                 </label>
 
-                                <a href="/forgot-password">
-                                    Forgot password?
-                                </a>
-
                             </div>
 
                             <input
@@ -211,8 +225,9 @@ function Login() {
                         <button
                             type="submit"
                             className="login-button"
+                            disabled={loading}
                         >
-                            Sign in
+                            {loading ? "Signing in..." : "Sign in"}
                             <span>→</span>
                         </button>
 
@@ -230,9 +245,9 @@ function Login() {
 
                         Don't have an account?{" "}
 
-                        <a href="/register">
+                        <Link to="/register">
                             Create an account
-                        </a>
+                        </Link>
 
                     </p>
 
